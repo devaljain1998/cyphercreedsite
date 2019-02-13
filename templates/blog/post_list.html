@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block header %}
+    <h1 class="display-3">{{title}}</h1>
+    <hr>
+{% endblock %}
+
+{% block content %}
+    {% for post in posts %}
+        <div class="blog-post">
+            <h2 class="blog-post-title">{{post.title}}</h2>
+            <p class="blog-post-meta"> {{post.published_date}} by <strong>{{post.author}}</strong></p>
+            <p> {{post.content}} </p>
+        </div>
+        <hr>
+    {% empty %}
+        <h2>Looks! Like Admins are way too busy in their daily lives so they haven't posted anything yet!</h2>
+    {% endfor %}
+{% endblock %}
