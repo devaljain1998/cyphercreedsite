@@ -4,5 +4,4 @@ from .models import Post
 
 def post_list(request):
     posts = Post.objects.all()
-    title = "Admin's Blog"
-    return render(request,'blog/post_list.html',{'posts':posts,'title':title})
+    return render(request,'blog/post_list.html',{'posts':posts,})

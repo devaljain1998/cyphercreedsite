@@ -1,19 +1,24 @@
 {% extends 'base.html' %}
+{% block title %} Admin's Blog {% endblock %}
 
 {% block header %}
-    <h1 class="display-3">{{title}}</h1>
-    <hr>
+    <h1 class="display-4" style="font-family: x-locale-heading-primary,zillaslab,Palatino,Palatino Linotype,x-locale-heading-secondary,serif;">
+        Admin's Blog 
+    </h1>
 {% endblock %}
 
 {% block content %}
+    <h2 class="alert-heading"> ANNOUNCEMENTS: </h2>  <hr>
     {% for post in posts %}
         <div class="blog-post">
-            <h2 class="blog-post-title">{{post.title}}</h2>
+            <h3 class="blog-post-title">{{post.title}}</h3>
             <p class="blog-post-meta"> {{post.published_date}} by <strong>{{post.author}}</strong></p>
             <p> {{post.content}} </p>
         </div>
         <hr>
     {% empty %}
-        <h2>Looks! Like Admins are way too busy in their daily lives so they haven't posted anything yet!</h2>
+        <h2 class="alert alert-primary alert-danger" role="alert">
+            <strong>No Posts from Admins!</strong><br></h2>
+        <strong>Looks like, Admins are way too busy in their daily lives so they haven't posted anything yet!</strong>
     {% endfor %}
 {% endblock %}

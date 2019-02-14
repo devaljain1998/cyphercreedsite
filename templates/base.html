@@ -7,7 +7,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
-    <title>CypherCreed: {{ title }}</title>
+    <title>CypherCreed: {% block title %} {% endblock %} </title>
 </head>
 <body>
     <!-- Navbar: -->
@@ -33,26 +33,29 @@
     <div class="container-fluid">
         <!-- Header: -->
         {% block header %}
-        {% endblock %}
+        {% endblock %} 
+        <hr>
         
         <div class="container-fluid">
             <div class="row">
-                <div class="col-sm-4">
+                <div class="col-sm-3">
                     <!-- Left SideBar: -->
                     {% block siderbar %}
-                    {% endblock %}
+                    {% endblock %} 
+                    <hr>
                 </div>
-                <div class="col-sm-8">
+                <div class="col-sm-9">
                     <!-- Main Content: -->
                     {% block content %}
                     {% endblock %}
+                    <hr>
                 </div>
             </div>
         </div>
         
         <!-- Footer: -->
         {% block footer %} 
-        {% endblock %}
+        {% endblock %} 
         <footer class="blog-footer">
             <p><strong>CypherCreed </strong>-- The Coding Community!</p>
             <p><a href="#">Back to top</a></p>
