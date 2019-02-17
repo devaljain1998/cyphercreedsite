@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block title %} Create Account {% endblock %}
+
+{% block header %}
+    <h1 class="display-4" style="font-family: x-locale-heading-primary,zillaslab,Palatino,Palatino Linotype,x-locale-heading-secondary,serif;">
+        Registration:
+    </h1>
+{% endblock %}
+
+{% block content %}
+    {# % load crispy_forms_tags % #}
+    <h2>Register Yourself at<span class="badge badge-pill">CypherCreed</span>:</h2>
+    <form action="." method="POST">
+        {% csrf_token %}
+        {{ user_form.as_p}}
+        {{ profile_form.as_p}}
+        <p><input type="submit" value="Create Account"></p>
+    </form>
+{% endblock %}

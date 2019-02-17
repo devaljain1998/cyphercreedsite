@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'crispy_forms',
     'blog.apps.BlogConfig',
     'discussion.apps.DiscussionConfig',
     'misc.apps.MiscConfig',
@@ -44,6 +45,8 @@ INSTALLED_APPS = [
     'django.contrib.postgres',
 ]
 
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -54,7 +57,16 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+LOGIN_REDIRECT_URL = '/adminBlog'
 ROOT_URLCONF = 'cyphercreed.urls'
+LOGOUT_URL	=	'logout'
+
+#EMAIL_BACKEND	=	'django.core.mail.backends.console.EmailBackend'
+EMAIL_HOST	=	'smtp.gmail.com'
+EMAIL_HOST_USER	=	'devaljain1998@gmail.com' 
+EMAIL_HOST_PASSWORD	=	'karmahitsyouback' 
+EMAIL_PORT	=	587 
+EMAIL_USE_TLS	=	True
 
 TEMPLATES = [
     {

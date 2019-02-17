@@ -11,7 +11,9 @@ urlpatterns = [
 
     #There are more URLS but all of this can be included with a single command:
     path('',include('django.contrib.auth.urls')),
-    #path('register/', views.register, name='register'),
+
+    #path('login/',views.LoginView,name='login')
+    path('register/', views.register, name='register'),
     #path('edit/', views.edit, name='edit'),
     #Activity
 ]

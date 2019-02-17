@@ -5,28 +5,28 @@ from django.contrib.auth.models import User
 
 class Profile(models.Model):
     BRANCH_CHOICES = [
-        (1,'Computer Science Engineering'),
-        (2,'Electronics and Communication Engineering'),
-        (3,'Electrical engineering'),
-        (4,'Mechanical Engineering'),
-        (5,'Information Technology Engineering'),
-        (6,'Civil Engineering'),
-        (7,'Chemical Engineering'),
-        (8,'Aeronautical Engineering'),
-        (9,'Agricultural engineering'),
-        (10,'Mining engineering'),
-        (11,'Biochemical engineering'),
-        (12,'Electrical and Instrumentation Engineering'),
-        (13,'Metallurgical Engineering'),
+        ('1','Computer Science Engineering'),
+        ('2','Electronics and Communication Engineering'),
+        ('3','Electrical engineering'),
+        ('4','Mechanical Engineering'),
+        ('5','Information Technology Engineering'),
+        ('6','Civil Engineering'),
+        ('7','Chemical Engineering'),
+        ('8','Aeronautical Engineering'),
+        ('9','Agricultural engineering'),
+        ('10','Mining engineering'),
+        ('11','Biochemical engineering'),
+        ('12','Electrical and Instrumentation Engineering'),
+        ('13','Metallurgical Engineering'),
     ]
 
     YEAR_CHOICES = (
-        (1,'First Year'),
-        (2,'Second Year'),
-        (3,'Three Year'),
-        (4,'Fourth Year'),
-        (5,'Fifth Year'),
-        (6,'Passout'),
+        ('1','First Year'),
+        ('2','Second Year'),
+        ('3','Third Year'),
+        ('4','Fourth Year'),
+        ('5','Fifth Year'),
+        ('6','Passout'),
     )
 
     user = models.OneToOneField(User,on_delete=models.CASCADE,help_text="eg: johndoe101")

@@ -26,8 +26,22 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">About Us</a>
-                </li>    
+                </li>
+                <!-- <div class="clearfix"> -->
+                <li class="nav-item">
+                    {% if user.is_authenticated %} <!-- <span class="float-right"> -->
+                     <a class="nav-link" href="#"> {{user.username}}'s Profile </a> <!-- </span> -->
+                    {% else %}
+                    <a class="nav-link" href="{% url 'login' %}"> Login </a>
+                    {% endif %}
+                </li>
+                {% if user.is_authenticated %}    
+                <li class="nav-item">
+                    <a class="nav-link" href=" {% url 'logout' %} ">Logout</a>
+                </li>
+                {% endif %}
              </ul>
+            <!-- </div> -->
             </div>  
         </nav>
     <div class="container-fluid">
