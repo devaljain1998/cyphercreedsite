@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'crispy_forms',
+    'taggit',
     'blog.apps.BlogConfig',
     'discussion.apps.DiscussionConfig',
     'misc.apps.MiscConfig',

@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block title %} Discussion Forum {% endblock %}
+
+{% block header %}    
+<h1 class="display-4" style="font-family: x-locale-heading-primary,zillaslab,Palatino,Palatino Linotype,x-locale-heading-secondary,serif;">
+Discussion Forum:
+</h1>
+{% endblock %}
+
+{% block content %}
+    <h2 class="alert-heading"> Questions </h2>  <hr>
+    {% for question in questions %}
+        <div class="blog-post">
+            <h3 class="blog-post-title">{{question.title}}</h3>
+            <p class="blog-post-meta"> {{question.created}} by <strong>{{question.user.username}}</strong></p>
+            <p> {{question.content}} </p>
+        </div>
+        {% for tag in question.tags.all %}
+            <span><a class="badge badge-info">{{tag.name}}</a> </span>
+        {% endfor %}
+        <div>{{ answered }}</div>
+        <hr>
+    {% empty %}
+        <h2 class="alert alert-primary alert-danger" role="alert">
+            <strong>No Questions Available!</strong><br></h2>
+        <strong>Looks like, Users are way too smart so they haven't posted anything yet! and can handle problems on their own without any assitance</strong>
+    {% endfor %}
+{% endblock %}
