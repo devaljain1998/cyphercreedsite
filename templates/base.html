@@ -10,6 +10,7 @@
     <title>CypherCreed: {% block title %} {% endblock %} </title>
 </head>
 <body>
+    
     <!-- Navbar: -->
         <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
             <a class="navbar-brand" href="#" style="color:rgb(39, 184, 39);" ><strong>CypherCreed</strong></a>
@@ -22,7 +23,7 @@
                     <a class="nav-link" href=" {% url 'forum' %} ">Discussion</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'adminBlog' %}">Admin Blog</a>
+                    <a class="nav-link" href="{% url 'post_list' %}">Admin Blog</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">About Us</a>

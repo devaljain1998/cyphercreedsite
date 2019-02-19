@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'markdownify',
     'crispy_forms',
     'taggit',
     'blog.apps.BlogConfig',
