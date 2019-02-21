@@ -17,4 +17,5 @@
     {% empty %}
         <h2 class="alert alert-primary alert-danger" role="alert"><strong>Nobody answered this question yet!</strong><br></h2>
     {% endfor %}
+    <div class="shadow p-3 mb-5 bg-white rounded"><a class="btn btn-default shadow" href=" {% url 'add_answer' pk=question.id %} ">Answer</a></div>
 {% endblock %}

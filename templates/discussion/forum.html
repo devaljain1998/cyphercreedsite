@@ -9,6 +9,7 @@ Discussion Forum:
 
 {% block content %}
     <h2 class="alert-heading"> Questions </h2>  <hr>
+    <p><span><a href=" {% url 'add_question' %} " >Ask!</a></span></p>
     {% for question in questions %}
         <div class="blog-post">
             <h3 class="blog-post-title"><a href=" {% url 'question_detail' pk=question.id %} ">{{question.title}}</a> </h3>

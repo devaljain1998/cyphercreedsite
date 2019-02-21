@@ -62,6 +62,7 @@ MIDDLEWARE = [
 LOGIN_REDIRECT_URL = '/adminBlog'
 ROOT_URLCONF = 'cyphercreed.urls'
 LOGOUT_URL	=	'logout'
+LOGIN_URL = '/profile/login'
 
 #EMAIL_BACKEND	=	'django.core.mail.backends.console.EmailBackend'
 EMAIL_HOST	=	'smtp.gmail.com'

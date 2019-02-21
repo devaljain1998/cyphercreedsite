@@ -1,9 +1,10 @@
 {% extends "base.html" %}
-{% load crispy_forms_tags %}
+{# % load crispy_forms_tags % #}
 
 {% block title %}Log-in{% endblock %}
 {% block header %} <h1>Log-in to your CypherCreed Account</h1> {% endblock %}
 {% block content %}
+
   {% if form.errors %}
     <p>
       Your username and password didn't match.
@@ -14,7 +15,7 @@
   {% endif %}
   <div class="login-form">
     <form action="{% url 'login' %}" method="post">
-      {{ form.as_p|crispy}}
+      {{ form.as_p }}
       {% csrf_token %}
       <input type="hidden" name="next" value="{{ next }}" />
       <p><input type="submit" value="Log-in"></p>
