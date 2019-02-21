@@ -59,10 +59,11 @@ def add_answer(request, pk):
         form = AnswerForm(request.POST)
         if form.is_valid():
             cd = form.cleaned_data
-            answer = Answer(content=cd['content'],user=request.user,question=pk)
+            ques = get_object_or_404(Question, pk = pk)
+            answer = Answer(content=cd['content'],user=request.user,question=ques)
             answer.save()
             messages.success(request,'Success! Your Answer has been added!')
-            return redirect('question_detail', pk=pk)
+            return redirect('question_detail' pk=pk)
         else:
             messages.error(request,form.errors)
     else:
