@@ -14,6 +14,7 @@ urlpatterns = [
 
     #path('login/',views.LoginView,name='login')
     path('register/', views.register, name='register'),
+    path('user/<pk>/',views.user_profile,name='userprofile')
     #path('edit/', views.edit, name='edit'),
     #Activity
 ]

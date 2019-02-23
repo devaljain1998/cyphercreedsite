@@ -55,19 +55,22 @@ def question_form(request):
 
 @login_required
 def add_answer(request, pk):
+    ques = get_object_or_404(Question, pk = pk)
     if request.method == 'POST':
-        form = AnswerForm(request.POST)
+        form = AnswerForm(request.user,ques,request.POST)
         if form.is_valid():
             cd = form.cleaned_data
-            ques = get_object_or_404(Question, pk = pk)
-            answer = Answer(content=cd['content'],user=request.user,question=ques)
+            answer = form.save(commit=False)
+            answer.question = ques
+            answer.user = request.user
+            answer.content = cd['content']
             answer.save()
             messages.success(request,'Success! Your Answer has been added!')
-            return redirect('question_detail' pk=pk)
+            return redirect('question_detail', pk=pk)
         else:
             messages.error(request,form.errors)
     else:
-        form = AnswerForm()
+        form = AnswerForm(request.user,ques)
     return render(request,'discussion/answer_create.html',{'form':form})  
 
 # class answerCreate(LoginRequiredMixin,CreateView):

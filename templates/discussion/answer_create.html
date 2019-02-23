@@ -12,7 +12,7 @@
     {% if form.errors %}
     <h4 class="alert alert-primary alert-warning" role="alert">Errors:<br> {{form.errors}}  <hr></h4>
     {% endif %}
-    <form action='.' method="POST">
+    <form action="" method="POST">
         {% csrf_token %}
         {{form.as_p}}
         <input type="submit">

@@ -6,7 +6,7 @@ from django.shortcuts import get_object_or_404
 from django.views.decorators.http import require_POST
 from django.contrib.auth.models import User
 from .models import Profile
-from .forms import ProfileRegistrationForm, UserRegistrationForm, LoginForm
+from .forms import *
 from django.http import HttpResponse
 
 # Create your views here.
@@ -53,3 +53,25 @@ def register(request):
         user_form = UserRegistrationForm()
         profile_form = ProfileRegistrationForm()
     return render(request,'registration/register.html',{'user_form':user_form,'profile_form':profile_form})
+
+def user_profile(request, pk):
+    profile = get_object_or_404(Profile,pk=pk)
+    return render(request,'userprofile/profile.html',{'profile':profile})
+
+def profile_edit(request, pk):
+    #profile = get_object_or_404(Profile, pk=pk)
+    if request.method == 'POST':
+        user_form = UserEditForm(request.POST)
+        profile_form = ProfileRegistrationForm(request.POST)
+        if user_form.is_valid() and profile_form.is_valid():
+            user = User()
+            profile = Profile()
+            cdu = user_form.cleaned_data
+            cdp = profile_form.cleaned_data
+        else:
+            messages.error(request,user_form.errors)
+            messages.error(request,profile_form.errors)
+    else:
+        user_form = UserEditForm()
+        profile_form = ProfileRegistrationForm()
+    return render(request,'userprofile/edit.html',{'user_form':user_form,'profile_form':profile_form})

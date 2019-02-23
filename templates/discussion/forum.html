@@ -6,7 +6,7 @@
 Discussion Forum:
 </h1>
 {% endblock %}
-
+{% load markdownify %}
 {% block content %}
     <h2 class="alert-heading"> Questions </h2>  <hr>
     <p><span><a href=" {% url 'add_question' %} " >Ask!</a></span></p>
@@ -14,7 +14,7 @@ Discussion Forum:
         <div class="blog-post">
             <h3 class="blog-post-title"><a href=" {% url 'question_detail' pk=question.id %} ">{{question.title}}</a> </h3>
             <p class="blog-post-meta"> {{question.created}} by <strong>{{question.user.username}}</strong></p>
-            <p> {{question.content}} </p>
+            <p> {{question.content|markdownify}} </p>
         </div>
         {% for tag in question.tags.all %}
             <span><a class="badge badge-info">{{tag.name}}</a> </span>

@@ -16,7 +16,12 @@ class QuestionForm(forms.ModelForm):
 
 class AnswerForm(forms.ModelForm):
     content = forms.CharField(widget=forms.Textarea,help_text='Your Answer in Detail. Note: MarkDown is enabled.')
-
+    
     class Meta:
         model = Answer
-        fields = ['content']
+        fields = ['content'] 
+    
+    def __init__(self,author,question,*args,**kwargs):
+        self.user = author
+        self.question = question
+        super().__init__(*args,**kwargs)
