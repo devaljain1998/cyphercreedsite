@@ -40,6 +40,7 @@ class Profile(models.Model):
     #answers
     #activity
     #avatar
+    #urls
     
 
     def __str__(self):
