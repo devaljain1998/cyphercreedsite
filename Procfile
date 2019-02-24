@@ -1,0 +1,1 @@
+web: gunicorn cyphercreed.wsgi --log-file -
