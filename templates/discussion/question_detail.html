@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
 {% load markdownify %}
-{% block title %} {{question.title}} {% endblock %}
+{% block title %} {{question}} {% endblock %}
 
 {% block header %}    
     <h2 class="display-5" style="font-family: x-locale-heading-primary,zillaslab,Palatino,Palatino Linotype,x-locale-heading-secondary,serif;">
-    <strong>{{question.title}}</strong> by {{question.user.username}} on {{question.created}}
+    <strong>{{question}}</strong> by {{question.user.username}} on {{question.created}}
     </h2>
     <p>{{question.content|markdownify}}</p>
 {% endblock %}
@@ -13,7 +13,24 @@
     {% for answer in answers %}
         <h3>Answer by: {{answer.user.username}} </h3> <!--Have to add user link here-->
         <p>{{answer.content|markdownify}}</p>
-        <p>Upvotes:{{answer.upvotes}}</p>
+        <p>
+            <span>Answered: {{answer.created}} </span> 
+            <span>| <!--UPDOWN--> Upvotes:{{answer.upvotes}}  |</span> <span><a class="btn btn-success" href="{% url 'answer_upvote' ans_id=answer.id %}" >UpVote</a></span><span><a class="btn btn-success" href=" {% url 'answer_downvote' ans_id=answer.id %} " >DownVote</a></span>
+            {% if answer.accepted == 1 %}
+            <span class="glyphicon glyphicon-ok"></span>
+            {% endif %}
+            {% if user == question.user %}
+            <span><a class="btn btn-info" href=" {% url 'accept_answer' ans_id=answer.id %} ">Accept Answer</a> </span>  
+            {% endif %}
+        </p>
+
+        <!--Comments for {{answer}} :-->
+        <div class="comments"> 
+            {# % for comment in answer.comment_set.all % #} <!--#answer.get_comment-->
+            {# % empty % #}
+            {# % endfor % #}    
+        </div>
+
     {% empty %}
         <h2 class="alert alert-primary alert-danger" role="alert"><strong>Nobody answered this question yet!</strong><br></h2>
     {% endfor %}

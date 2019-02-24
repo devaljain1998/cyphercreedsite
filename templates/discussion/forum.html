@@ -7,23 +7,34 @@ Discussion Forum:
 </h1>
 {% endblock %}
 {% load markdownify %}
+
 {% block content %}
     <h2 class="alert-heading"> Questions </h2>  <hr>
-    <p><span><a href=" {% url 'add_question' %} " >Ask!</a></span></p>
+
     {% for question in questions %}
-        <div class="blog-post">
-            <h3 class="blog-post-title"><a href=" {% url 'question_detail' pk=question.id %} ">{{question.title}}</a> </h3>
-            <p class="blog-post-meta"> {{question.created}} by <strong>{{question.user.username}}</strong></p>
-            <p> {{question.content|markdownify}} </p>
+    <div class="card">
+        <div class="card-header bg-dark text-light">
+          <strong class="font-weight-bold"><a href=" {% url 'question_detail' pk=question.id %} " class="text-light" >{{question}}</a></strong>
         </div>
-        {% for tag in question.tags.all %}
-            <span><a class="badge badge-info">{{tag.name}}</a> </span>
-        {% endfor %}
-        <div>{{ answered }}</div>
-        <hr>
+        <div class="card-body">
+            <p class="card-subtitle mb-2 text-muted text-right">by  <!--Link for user profile--> {{question.user.username}} on {{question.created}} </p>
+          <p class="card-text small">{{question.content|markdownify}}</p>
+          <a href="#" class="btn btn-primary">Answer</a>
+        </div>
+        <div class="card-footer">
+            <span>{{answered}}</span>
+            | Tags:  
+            {% for tag in question.tags.all %}
+                <span><a class="badge badge-dark text-light">{{tag.name}}</a> </span>
+            {% empty %}
+                <span>No Tags</span>
+            {% endfor %}
+        </div>
+      </div> <br>
     {% empty %}
         <h2 class="alert alert-primary alert-danger" role="alert">
             <strong>No Questions Available!</strong><br></h2>
         <strong>Looks like, Users are way too smart so they haven't posted anything yet! and can handle problems on their own without any assitance</strong>
     {% endfor %}
+
 {% endblock %}

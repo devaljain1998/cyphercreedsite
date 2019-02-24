@@ -3,12 +3,13 @@ from .models import Question, Answer
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from .forms import QuestionForm, AnswerForm
+from .forms import *
 from datetime import datetime
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from userprofile.models import Profile
+from django.urls import reverse_lazy
 
 # Create your views here.
 def forum(request):
@@ -24,18 +25,6 @@ def questionView(request,pk):
     answers = Answer.objects.filter(question=question.id)
     return render(request,'discussion/question_detail.html',{'question':question,'answers':answers})
 
-# I will deal with this later:
-class questionCreate(LoginRequiredMixin,CreateView):
-    form_class = QuestionForm 
-    template_name = 'discussion\question_form.html'
-
-    def get_initial(self):
-        return {'user':self.request.user.id}
-        #form_class.instance.user = User.objects.get(pk=self.request.user)
-
-    # def form_valid(self, form):
-    #     form.instance.user = User.objects.get(pk=self.request.user)
-    #     return super().form_valid(form)
 
 @login_required
 def question_form(request):
@@ -73,9 +62,105 @@ def add_answer(request, pk):
         form = AnswerForm(request.user,ques)
     return render(request,'discussion/answer_create.html',{'form':form})  
 
-# class answerCreate(LoginRequiredMixin,CreateView):
-#     form_class = AnswerForm
-#     fields = 'content'
-#     template_name = 'discussion/answer_create.html'
+#Update Question:
+@login_required
+def edit_question(request, pk):
+    question = get_object_or_404(Question,pk=pk)
+    form = QuestionEditForm(title=question.title,content=question.content,tags=question.tags)
+    if request.method == 'POST':
+        form = QuestionEditForm(request.POST)
+        if form.is_valid():
+            cd = form.cleaned_data
+            question.title,question.content,question.tags = cd['title'],cd['content'],cd['tags']
+            question.save()
+            return redirect('question_detail',pk=pk)
+        else:
+            messages.error(request,form.errors)
+    return render(request,'discussion/question_edit.html',{'form':form})
 
+#Update Answer:
+@login_required
+class AnswerUpdate(UpdateView):
+    model = Answer
+    fields = ('content',)
+    template_name = 'discussion/answer_update.html'
+
+#Delete Question:
+@login_required
+class QuestionDelete(DeleteView):
+    model = Question
+    success_url = reverse_lazy('forum')
+
+#Delete Answer:
+#@login_required
+class AnswerDelete(DeleteView,LoginRequiredMixin):
+    model = Answer
     
+    # def __init__(self,question,*args,**kwargs)
+    #     super().__init__(*args,**kwargs)
+    #     ques_id = question
+
+    success_url =  reverse_lazy('forum') #reverse_lazy('question_detail',pk=self.question.id)
+
+#Upvote View:
+@login_required
+def upvote(request, ans_id):
+    answer = get_object_or_404(Answer,pk=ans_id)
+    answer.upvotes += 1
+    answer.save()
+    return redirect('question_detail',pk=answer.question.id)
+
+#Downvote View:
+@login_required
+def downvote(request, ans_id):
+    answer = get_object_or_404(Answer,pk=ans_id)
+    answer.upvotes -= 1
+    if answer.upvotes < 0:
+        answer.upvotes = 0
+    answer.save()
+    return redirect('question_detail', pk=answer.question.id)
+
+#Accepted View:
+@login_required
+def accept_answer(request, ans_id):
+    answer = get_object_or_404(Answer, pk=ans_id)
+    answer.accepted = True
+    answer.save()
+    return redirect('question_detail',pk=answer.question.id)
+
+#Add Comment View:
+@login_required
+def add_comment(request, ans_id, pk):
+    answer = get_object_or_404(Answer, pk = ans_id)
+    if request.method == 'POST':
+        form = CommentForm(request.user, answer, request.POST)
+        if form.is_valid():
+            cd = form.cleaned_data
+            comment = form.save(commit=False)
+            comment.answer = answer
+            comment.user = request.user
+            comment.content = cd['content']
+            comment.save()
+            messages.success(request,'Success! Your Comment has been posted!')
+            return redirect('question_detail', pk=pk)
+        else:
+            messages.error(request,form.errors)
+    else:
+        form = CommentForm(request.user, answer)
+    return render(request,'discussion/comment_create.html',{'form':form})  
+
+
+
+
+# I will deal with this later:
+# class questionCreate(LoginRequiredMixin,CreateView):
+#     form_class = QuestionForm 
+#     template_name = 'discussion\question_form.html'
+
+#     def get_initial(self):
+#         return {'user':self.request.user.id}
+#         #form_class.instance.user = User.objects.get(pk=self.request.user)
+
+#     # def form_valid(self, form):
+#     #     form.instance.user = User.objects.get(pk=self.request.user)
+#     #     return super().form_valid(form)

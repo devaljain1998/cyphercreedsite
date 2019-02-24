@@ -29,9 +29,23 @@ class Answer(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     upvotes = models.PositiveIntegerField(default=0)
     is_active = models.BooleanField(default=True)
+    accepted = models.BooleanField(default=False)
 
     def __str__(self):
         return '{}\'s Answer'.format(self.user.username)
 
     class Meta:
         	ordering = ('-upvotes','-created')
+
+class Comment(models.Model):
+    content = models.CharField(max_length=500, help_text = "Avoid comment like +1 or Thanks. Upvote to the answer instead" )
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
+    answer = models.ForeignKey(Answer,on_delete=models.CASCADE)
+    created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'Comment by {self.user.username} on {self.created}'
+
+    class Meta:
+        	ordering = ('-created',)
+    
