@@ -8,8 +8,9 @@ urlpatterns = [
     path('question/<pk>/question_detail/edit',views.edit_question,name='edit_question'),
     path('question/<pk>/question_detail/delete',views.QuestionDelete.as_view(),name='delete_question'),
     path('question/<pk>/question_detail/answer',views.add_answer,name='add_answer'),
-    ##path('question/<pk>/question_detail/answer/edit',views.AnswerUpdate.as_view(),name='edit_answer'),
-    path('question/<pk>/question_detail/answer/delete',views.AnswerDelete.as_view(),name='delete_answer'),
+    path('question/<pk>/question_detail/answer/edit',views.AnswerUpdate.as_view(),name='edit_answer'),
+    path('answer/delete/<ans_id>',views.delete_answer,name='delete_answer'),
+    #path('question/<pk>/question_detail/answer/delete',views.AnswerDelete.as_view(),name='delete_answer'),
 
     #Cpath('question/<pk>/question_detail/answer/comment/success',views.add_comment,name='add_comment'),
     #path('question/<pk>/question_detail/answer/upvote/<ans_id>/success',views.upvote,name='answer_upvote'),

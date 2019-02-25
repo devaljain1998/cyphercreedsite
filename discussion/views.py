@@ -81,8 +81,7 @@ def edit_question(request, pk):
     return render(request,'discussion/question_edit.html',{'form':form,'question':question})
 
 #Update Answer:
-@login_required
-class AnswerUpdate(UpdateView):
+class AnswerUpdate(UpdateView,LoginRequiredMixin):
     model = Answer
     fields = ('content',)
     template_name = 'discussion/answer_update.html'
@@ -96,12 +95,23 @@ class QuestionDelete(DeleteView,LoginRequiredMixin):
 #@login_required
 class AnswerDelete(DeleteView,LoginRequiredMixin):
     model = Answer
-    
+
     # def __init__(self,question,*args,**kwargs)
     #     super().__init__(*args,**kwargs)
-    #     ques_id = question
+    #     ques_id = self.request.question.id
 
     success_url =  reverse_lazy('forum') #reverse_lazy('question_detail',pk=self.question.id)
+
+@login_required
+def delete_answer(request,ans_id):
+    answer = get_object_or_404(Answer,pk=ans_id)
+    if request.method == 'POST':
+        ques_id = answer.question.id
+        answer.delete()
+        return redirect('question_detail',pk=ques_id)
+    return render(request,'discussion/answer_confirm_delete.html',{'object':answer})
+
+
 
 #Upvote View:
 @login_required

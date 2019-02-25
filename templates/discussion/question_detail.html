@@ -26,6 +26,10 @@
             {% if user == question.user %}
             <span><a class="btn btn-info" href=" {% url 'accept_answer' ans_id=answer.id %} ">Accept Answer</a> </span>  
             {% endif %}
+            {% if user == answer.user %}
+            <span><a class="btn btn-danger" href=" {% url 'delete_answer' ans_id=answer.id %} ">Delete Answer</a> </span>  
+            {% endif %}
+
         </p>
 
         <!--Comments for {{answer}} :-->
