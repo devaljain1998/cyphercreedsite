@@ -27,16 +27,18 @@ class AnswerForm(forms.ModelForm):
         super().__init__(*args,**kwargs)
 
 class QuestionEditForm(forms.ModelForm):
+    #user = forms.ChoiceField(widget=forms.HiddenInput,disabled=True)
     title = forms.CharField(max_length=100)
     content = forms.CharField(widget=forms.Textarea,help_text='Your question in detail. Note: MarkDown is enabled.')
     tags = TaggableManager()
 
     class Meta:
         model = Question
-        fields = ['title','content','tags',]
+        fields = ['title','content','tags']
 
-    # def __init__(self,*args,**kwargs):
+    # def __init__(self,author,*args,**kwargs):
     #     super().__init__(*args,**kwargs)
+    #     self.user = author
 
     # def __init__(self,title,content,tags,*args,**kwargs):
     #     self.title = title

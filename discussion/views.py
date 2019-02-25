@@ -69,7 +69,7 @@ def edit_question(request, pk):
     question = get_object_or_404(Question,pk=pk)
     form = QuestionEditForm(instance=question)
     if request.method == 'POST':
-        form = QuestionEditForm(request.POST)
+        form = QuestionEditForm(request.POST,instance=question)
         if form.is_valid():
             question = form.save(commit=False)
             question.user = request.user
