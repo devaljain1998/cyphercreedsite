@@ -88,8 +88,7 @@ class AnswerUpdate(UpdateView):
     template_name = 'discussion/answer_update.html'
 
 #Delete Question:
-@login_required
-class QuestionDelete(DeleteView):
+class QuestionDelete(DeleteView,LoginRequiredMixin):
     model = Question
     success_url = reverse_lazy('forum')
 

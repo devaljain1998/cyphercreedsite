@@ -9,6 +9,7 @@
     <p>{{question.content|markdownify}}</p>
     {% if user == question.user %}
     <span><a class="btn btn-info" href=" {% url 'edit_question' pk=question.id %} ">Edit Question</a> </span>  
+    <span><a class="btn btn-danger" href=" {% url 'delete_question' pk=question.id %} ">Delete Question</a> </span>  
     {% endif %}
 {% endblock %}
 
