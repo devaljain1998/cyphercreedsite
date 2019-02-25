@@ -10,7 +10,7 @@ class AnswerInline(admin.TabularInline):
 @admin.register(Question)
 class QuestionAdmin(admin.ModelAdmin):
     list_display = ('title','user','content','created','is_active','tag_list') 
-    fields = ('title','user','content','is_active')
+    fields = ('title','user','content','is_active','tags')
     inlines = [AnswerInline]
     list_filter = ('created','is_active','user','tags')
     search_fields = ('title','content',) #tags cannot be searched

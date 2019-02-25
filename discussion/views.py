@@ -31,9 +31,10 @@ def question_form(request):
     if request.method == 'POST':
         form = QuestionForm(request.POST)
         if form.is_valid():
-            cd = form.cleaned_data
-            question = Question(title=cd['title'],content=cd['content'],user=request.user,tags=cd['tags'])
+            question = form.save(commit=False) 
+            question.user = request.user
             question.save()
+            form.save_m2m() #For django-taggit
             messages.success(request,'Success! Your Question has been added!')
             return redirect('forum')
         else:
@@ -66,17 +67,18 @@ def add_answer(request, pk):
 @login_required
 def edit_question(request, pk):
     question = get_object_or_404(Question,pk=pk)
-    form = QuestionEditForm(title=question.title,content=question.content,tags=question.tags)
+    form = QuestionEditForm(instance=question)
     if request.method == 'POST':
         form = QuestionEditForm(request.POST)
         if form.is_valid():
-            cd = form.cleaned_data
-            question.title,question.content,question.tags = cd['title'],cd['content'],cd['tags']
+            question = form.save(commit=False)
+            question.user = request.user
             question.save()
+            form.save_m2m() #For django-taggit
             return redirect('question_detail',pk=pk)
         else:
             messages.error(request,form.errors)
-    return render(request,'discussion/question_edit.html',{'form':form})
+    return render(request,'discussion/question_edit.html',{'form':form,'question':question})
 
 #Update Answer:
 @login_required

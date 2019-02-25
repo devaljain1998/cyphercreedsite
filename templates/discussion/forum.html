@@ -9,8 +9,10 @@ Discussion Forum:
 {% load markdownify %}
 
 {% block content %}
-    <h2 class="alert-heading"> Questions </h2>  <hr>
-
+    <h2 class="alert-heading"> Questions </h2> 
+    <span><a class="btn btn-info" href=" {% url 'add_question' %} ">Ask</a> </span>
+    <hr>
+    
     {% for question in questions %}
     <div class="card">
         <div class="card-header bg-dark text-light">
@@ -22,7 +24,7 @@ Discussion Forum:
           <a href="#" class="btn btn-primary">Answer</a>
         </div>
         <div class="card-footer">
-            <span>{{answered}}</span>
+            <span>{{answered}}</span> 
             | Tags:  
             {% for tag in question.tags.all %}
                 <span><a class="badge badge-dark text-light">{{tag.name}}</a> </span>

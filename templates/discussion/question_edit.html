@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %} EDIT: {{question}} {% endblock %}
+
+{% block content %}
+    {% if form.errors %}
+    <h4 class="alert alert-primary alert-warning" role="alert">Errors:<br> {{form.errors}}  <hr></h4>
+    {% endif %}
+    
+    <form action="" method="POST">
+        {% csrf_token %}
+        {{form.as_p}}
+        <input type="submit">
+    </form>
+{% endblock %}

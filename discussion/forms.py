@@ -26,19 +26,23 @@ class AnswerForm(forms.ModelForm):
         self.question = question
         super().__init__(*args,**kwargs)
 
-class QuestionEditForm(forms.Form):
+class QuestionEditForm(forms.ModelForm):
     title = forms.CharField(max_length=100)
     content = forms.CharField(widget=forms.Textarea,help_text='Your question in detail. Note: MarkDown is enabled.')
     tags = TaggableManager()
 
-    def __init__(self,*args,**kwargs):
-        super().__init__(*args,**kwargs)
+    class Meta:
+        model = Question
+        fields = ['title','content','tags',]
 
-    def __init__(self,title,content,tags,*args,**kwargs):
-        self.title = title
-        self.content = content
-        self.tags = tags
-        super().__init__(*args,**kwargs)
+    # def __init__(self,*args,**kwargs):
+    #     super().__init__(*args,**kwargs)
+
+    # def __init__(self,title,content,tags,*args,**kwargs):
+    #     self.title = title
+    #     self.content = content
+    #     self.tags = tags
+    #     super().__init__(*args,**kwargs)
 
 class CommentForm(forms.Form):
     content = forms.CharField(max_length=255,widget=forms.TextInput(attrs={'placeholder': 'Search'}))

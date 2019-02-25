@@ -7,6 +7,9 @@
     <strong>{{question}}</strong> by {{question.user.username}} on {{question.created}}
     </h2>
     <p>{{question.content|markdownify}}</p>
+    {% if user == question.user %}
+    <span><a class="btn btn-info" href=" {% url 'edit_question' pk=question.id %} ">Edit Question</a> </span>  
+    {% endif %}
 {% endblock %}
 
 {% block content %}
