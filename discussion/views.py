@@ -105,7 +105,7 @@ class AnswerDelete(DeleteView,LoginRequiredMixin):
 @login_required
 def delete_answer(request,ans_id):
     answer = get_object_or_404(Answer,pk=ans_id)
-    if request.method == 'POST':
+    if request.method == 'POST': 
         ques_id = answer.question.id
         answer.delete()
         return redirect('question_detail',pk=ques_id)
