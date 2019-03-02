@@ -89,7 +89,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'cyphercreed.wsgi.application'
+WSGI_APPLICATION = 'cyphercreedtestsite.wsgi.application'
 
 
 # Database
