@@ -5,3 +5,4 @@ myvenv
 /static
 .DS_Storegit 
 local_settings.py
+poptemp.html
