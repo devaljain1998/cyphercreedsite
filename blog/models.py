@@ -8,12 +8,15 @@ class Post(models.Model):
     content = models.TextField()
     published_date = models.DateField(default=timezone.now)
     AUTHOR_CHOICES = (
-        (1,"Deval Sethi"),
-        (2,"Ujjwal Singh Bhadoria"),
-        (3,"Shishir Maurya"),
-        (4,"Arghya Debnath"),
+        ('Deval Sethi',"Deval Sethi"),
+        ('Ujjwal Singh Bhadoria',"Ujjwal Singh Bhadoria"),
+        ('Shishir Maurya',"Shishir Maurya"),
+        ('Arghya Debnath',"Arghya Debnath"),
     )
-    author = models.CharField(max_length=50,choices=AUTHOR_CHOICES,default=1) 
+    author = models.CharField(max_length=50,choices=AUTHOR_CHOICES,default='Deval Sethi') 
     
     def __str__(self):
-        return f'{{self.title}} by {{self.author.value}} on {{self.published_date}}'
+        return f'{self.title} by {self.author} on {self.published_date}'
+
+    class Meta:
+        ordering = ('-published_date',)
