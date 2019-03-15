@@ -10,10 +10,21 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from userprofile.models import Profile
 from django.urls import reverse_lazy
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 # Create your views here.
 def forum(request):
-    questions = Question.objects.filter(is_active=True)
+    question_list = Question.objects.filter(is_active=True)
+    page = request.GET.get('page',1)
+    paginator = Paginator(question_list, 5)
+
+    try:
+        questions = paginator.page(page)
+    except PageNotAnInteger:
+        questions = paginator.page(1)
+    except EmptyPage:
+        questions = paginator.page(paginator.num_pages)
+
     answered = []
     for question in questions:
         answered.append(Answer.objects.filter(question=question.id).count()) #Untested till now

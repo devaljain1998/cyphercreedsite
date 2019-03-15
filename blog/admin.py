@@ -4,3 +4,4 @@ from blog.models import Post
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
     list_display = ('title','published_date','author')
+    list_filter = ('published_date','author',)
