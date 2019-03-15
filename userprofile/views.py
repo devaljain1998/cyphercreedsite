@@ -44,7 +44,7 @@ def register(request):
             profile.user = user
             profile.save()
             registered = True
-            return redirect('registration.login.html')
+            return redirect('login')
         else: 
             #The Forms are not valid, print errors
             messages.error(request,user_form.errors)
