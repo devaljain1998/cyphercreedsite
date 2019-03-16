@@ -12,14 +12,17 @@ Discussion Forum:
     <h2 class="alert-heading"> Questions </h2> 
     <span><a class="btn btn-info" href=" {% url 'add_question' %} ">Ask</a> </span>
     <hr>
-    
+
+    {% if tag %}
+    <h4>Questions tagged with "{{ tag.name }}"</h4>
+    {% endif %}
     {% for question in questions %}
     <div class="card">
         <div class="card-header bg-dark text-light">
           <strong class="font-weight-bold"><a href=" {% url 'question_detail' pk=question.id %} " class="text-light" >{{question}}</a></strong>
         </div>
         <div class="card-body">
-            <p class="card-subtitle mb-2 text-muted text-right">by  <!--Link for user profile--> {{question.user.username}} on {{question.created}} </p>
+            <p class="card-subtitle mb-2 text-muted text-right">by  <!--Link for user profile--> <a href=" {# % url 'user_profile' pk=question.user.profile.id % #} ">{{question.user.username}}</a> on {{question.created}} </p>
           <p class="card-text small">{{question.content|markdownify}}</p>
           <a href="{% url 'add_answer' pk=question.id %}" class="btn btn-primary">Answer</a>
         </div>
@@ -27,7 +30,7 @@ Discussion Forum:
             <span> Answers: {{question.answers.all.count}} </span> 
             | Tags:  
             {% for tag in question.tags.all %}
-                <span><a class="badge badge-dark text-light">{{tag.name}}</a> </span>
+                <span><a href="{% url 'question_list_by_tag' tag.slug %}" class="badge badge-dark text-light">{{tag.name}}</a> </span>
             {% empty %}
                 <span>No Tags</span>
             {% endfor %}

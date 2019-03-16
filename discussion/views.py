@@ -11,10 +11,16 @@ from django.contrib.auth.models import User
 from userprofile.models import Profile
 from django.urls import reverse_lazy
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from taggit.models import Tag
 
 # Create your views here.
-def forum(request):
+def forum(request, tag_slug=None):
     question_list = Question.objects.filter(is_active=True)
+
+    tag	=	None
+    if	tag_slug:								
+        tag	= get_object_or_404(Tag, slug=tag_slug)								
+        question_list = question_list.filter(tags__in=[tag])
 
     #Pagination
     page = request.GET.get('page',1)
@@ -27,7 +33,7 @@ def forum(request):
     except EmptyPage:
         questions = paginator.page(paginator.num_pages)
 
-    return render(request,'discussion/forum.html',{'questions':questions,})
+    return render(request,'discussion/forum.html',{'questions':questions,'tag':tag})
 
 def questionView(request,pk):
     question = get_object_or_404(Question,pk=pk)
