@@ -27,7 +27,7 @@ def forum(request):
     except EmptyPage:
         questions = paginator.page(paginator.num_pages)
 
-    return render(request,'discussion/forum.html',{'questions':questions,'answered':answered})
+    return render(request,'discussion/forum.html',{'questions':questions,})
 
 def questionView(request,pk):
     question = get_object_or_404(Question,pk=pk)
