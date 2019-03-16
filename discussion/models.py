@@ -25,7 +25,7 @@ class Question(models.Model):
 class Answer(models.Model):
     content = models.TextField()
     user = models.ForeignKey(User,on_delete=models.CASCADE)
-    question = models.ForeignKey(Question,on_delete=models.CASCADE,blank=False)
+    question = models.ForeignKey(Question,on_delete=models.CASCADE, blank=False, related_name='answers')
     created = models.DateTimeField(auto_now_add=True)
     upvotes = models.PositiveIntegerField(default=0)
     is_active = models.BooleanField(default=True)
@@ -47,5 +47,8 @@ class Comment(models.Model):
         return f'Comment by {self.user.username} on {self.created}'
 
     class Meta:
-        	ordering = ('-created',)
+        ordering = ('-created',)
     
+class Vote(models.Model):
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
+    answer = models.ForeignKey(Answer,on_delete=models.CASCADE)

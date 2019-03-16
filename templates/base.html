@@ -31,7 +31,7 @@
                 <!-- <div class="clearfix"> -->
                 <li class="nav-item">
                     {% if user.is_authenticated %} <!-- <span class="float-right"> -->
-                     <a class="nav-link" href=" {# % url 'userprofile' pk=profile.id % #} "> {{user.username}}'s Profile </a> <!-- </span> -->
+                     <a class="nav-link" href="{% url 'user_profile' pk=user.profile.id %} "> {{user.username}}'s Profile </a> <!-- </span> -->
                     {% else %}
                     <a class="nav-link" href="{% url 'login' %}"> Login </a>
                     {% endif %}

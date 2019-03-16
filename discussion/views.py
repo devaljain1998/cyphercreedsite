@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Question, Answer
+from .models import Question, Answer, Vote
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
@@ -15,6 +15,8 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 # Create your views here.
 def forum(request):
     question_list = Question.objects.filter(is_active=True)
+
+    #Pagination
     page = request.GET.get('page',1)
     paginator = Paginator(question_list, 5)
 
@@ -25,17 +27,12 @@ def forum(request):
     except EmptyPage:
         questions = paginator.page(paginator.num_pages)
 
-    answered = []
-    for question in questions:
-        answered.append(Answer.objects.filter(question=question.id).count()) #Untested till now
-    #Pagination
     return render(request,'discussion/forum.html',{'questions':questions,'answered':answered})
 
 def questionView(request,pk):
     question = get_object_or_404(Question,pk=pk)
     answers = Answer.objects.filter(question=question.id)
     return render(request,'discussion/question_detail.html',{'question':question,'answers':answers})
-
 
 @login_required
 def question_form(request):
@@ -128,18 +125,27 @@ def delete_answer(request,ans_id):
 @login_required
 def upvote(request, ans_id):
     answer = get_object_or_404(Answer,pk=ans_id)
-    answer.upvotes += 1
-    answer.save()
+    user = request.user
+    alreadyVoted = Vote.objects.filter(user=user,answer=answer).first()
+    if alreadyVoted is None:
+        voted = Vote(user=user,answer=answer)
+        voted.save()
+        answer.upvotes += 1
+        answer.save()
     return redirect('question_detail',pk=answer.question.id)
 
 #Downvote View:
 @login_required
 def downvote(request, ans_id):
     answer = get_object_or_404(Answer,pk=ans_id)
-    answer.upvotes -= 1
-    if answer.upvotes < 0:
-        answer.upvotes = 0
-    answer.save()
+    user = request.user
+    alreadyVoted = Vote.objects.filter(user=user,answer=answer).first()
+    if alreadyVoted is not None:
+        alreadyVoted.delete()
+        answer.upvotes -= 1
+        if answer.upvotes < 0:
+            answer.upvotes = 0
+        answer.save()
     return redirect('question_detail', pk=answer.question.id)
 
 #Accepted View:

@@ -24,7 +24,7 @@ Discussion Forum:
           <a href="{% url 'add_answer' pk=question.id %}" class="btn btn-primary">Answer</a>
         </div>
         <div class="card-footer">
-            <span>{{answered}}</span> 
+            <span> Answers: {{question.answers.all.count}} </span> 
             | Tags:  
             {% for tag in question.tags.all %}
                 <span><a class="badge badge-dark text-light">{{tag.name}}</a> </span>

@@ -29,7 +29,7 @@ class Profile(models.Model):
         ('6','Passout'),
     )
 
-    user = models.OneToOneField(User,on_delete=models.CASCADE,help_text="eg: johndoe101")
+    user = models.OneToOneField(User,on_delete=models.CASCADE, help_text="eg: johndoe101", related_name='profile')
     college = models.CharField(max_length=100, blank=True,help_text="eg: Poornima College Of Engineering, Jaipur")
     year = models.CharField(choices=YEAR_CHOICES,help_text='Your current year',default=1,max_length=20)
     branch = models.CharField(max_length=50,choices=BRANCH_CHOICES,default=1,null=False,blank=False) 
