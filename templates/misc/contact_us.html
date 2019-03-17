@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% load markdownify %}
+{% block title %} Contact Cyphercreed {% endblock %}
+
+{% block header %}    
+    <h2 class="display-5" style="font-family: x-locale-heading-primary,zillaslab,Palatino,Palatino Linotype,x-locale-heading-secondary,serif;">
+        Contact Us:
+    </h2>  
+{% endblock %}
+
+{% block content %}
+    {% if form.errors %}
+    <h4 class="alert alert-primary alert-warning" role="alert">Errors:<br> {{form.errors}}  <hr></h4>
+    {% endif %}
+    <form action='.' method="POST">
+        {% csrf_token %}
+        {{form.as_p}}
+        <input type="submit">
+    </form>
+{% endblock %}

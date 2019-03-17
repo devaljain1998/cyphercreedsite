@@ -9,8 +9,8 @@ Discussion Forum:
 {% load markdownify %}
 
 {% block content %}
-    <h2 class="alert-heading"> Questions </h2> 
-    <span><a class="btn btn-info" href=" {% url 'add_question' %} ">Ask</a> </span>
+    
+    <span><h2 class="alert-heading"> Questions </h2> <a class="btn btn-info" href=" {% url 'add_question' %} ">Ask</a> </span>
     <hr>
 
     {% if tag %}
