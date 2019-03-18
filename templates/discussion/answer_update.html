@@ -15,10 +15,11 @@ Update Answer:
 {% endblock %}
 
 {% block content %}
+    {% load crispy_forms_tags %}
     <h2 class="alert-heading"> Questions </h2>  <hr>
     <form action="" method="POST" >
     {% csrf_token %}
-    {{form.as_p}}
+    {{form|crispy}}
     <input type="submit">
 </form>
 {% endblock %}

@@ -9,12 +9,13 @@
 {% endblock %}
 
 {% block content %}
+    {% load crispy_forms_tags %}
     {% if form.errors %}
     <h4 class="alert alert-primary alert-warning" role="alert">Errors:<br> {{form.errors}}  <hr></h4>
     {% endif %}
     <form action="" method="POST">
         {% csrf_token %}
-        {{form.as_p}}
+        {{form|crispy}}
         <input type="submit">
     </form>
 {% endblock %}

@@ -3,6 +3,7 @@ from django import forms
 from django.db import models
 from taggit.managers import TaggableManager
 from django.contrib.auth import get_user_model
+from dal import autocomplete
 
 class QuestionForm(forms.ModelForm):
     #user = forms.IntegerField(widget=forms.HiddenInput,disabled=True) #choices=get_user_model().objects.all(),
@@ -13,6 +14,16 @@ class QuestionForm(forms.ModelForm):
     class Meta:
         model = Question
         fields = ['title','content','tags',]
+
+class QuestionAutoCompleteForm(autocomplete.FutureModelForm):
+    class Meta:
+        model = Question
+        fields = ('title','content',) #'tags',
+        widgets = {
+            'tags': autocomplete.TaggitSelect2(
+                'discussion/tag_autocomplete'
+            )
+        }
 
 class AnswerForm(forms.ModelForm):
     content = forms.CharField(widget=forms.Textarea,help_text='Your Answer in Detail. Note: MarkDown is enabled.')

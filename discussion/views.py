@@ -12,6 +12,8 @@ from userprofile.models import Profile
 from django.urls import reverse_lazy
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from taggit.models import Tag
+from dal import autocomplete
+from actions.utils import create_action
 
 # Create your views here.
 def forum(request, tag_slug=None):
@@ -48,6 +50,7 @@ def question_form(request):
             question = form.save(commit=False) 
             question.user = request.user
             question.save()
+            create_action(request.user, 'asked', question)
             form.save_m2m() #For django-taggit
             messages.success(request,'Success! Your Question has been added!')
             return redirect('forum')
@@ -69,6 +72,7 @@ def add_answer(request, pk):
             answer.user = request.user
             answer.content = cd['content']
             answer.save()
+            create_action(request.user, 'answered', ques)
             messages.success(request,'Success! Your Answer has been added!')
             return redirect('question_detail', pk=pk)
         else:
@@ -88,6 +92,7 @@ def edit_question(request, pk):
             question = form.save(commit=False)
             question.user = request.user
             question.save()
+            create_action(request.user, 'edited', question)
             form.save_m2m() #For django-taggit
             return redirect('question_detail',pk=pk)
         else:
@@ -99,6 +104,20 @@ class AnswerUpdate(UpdateView,LoginRequiredMixin):
     model = Answer
     fields = ('content',)
     template_name = 'discussion/answer_update.html'
+
+def edit_answer(request, ans_id):
+    answer = get_object_or_404(Answer,pk=ans_id)
+    question = answer.question
+    form = AnswerForm(request.user, question, instance=answer)
+    if request.method == 'POST':
+        form = AnswerForm(request.user, question, request.POST,instance=answer)
+        if form.is_valid():
+            answer = form.save()
+            #create_action(request.user,'edited answer:',answer)
+            return redirect('question_detail',pk=question.id)
+        else:
+            messages.error(request,form.errors)
+    return render(request,'discussion/answer_create.html',{'form':form})  
 
 #Delete Question:
 class QuestionDelete(DeleteView,LoginRequiredMixin):
@@ -183,7 +202,18 @@ def add_comment(request, ans_id, pk):
         form = CommentForm(request.user, answer)
     return render(request,'discussion/comment_create.html',{'form':form})  
 
+class TagAutocomplete(autocomplete.Select2QuerySetView):
+    def get_queryset(self):
+        # Don't forget to filter out results depending on the visitor !
+        if not self.request.user.is_authenticated():
+            return Tag.objects.none()
 
+        qs = Tag.objects.all()
+
+        if self.q:
+            qs = qs.filter(name__istartswith=self.q)
+
+        return qs
 
 
 # I will deal with this later:

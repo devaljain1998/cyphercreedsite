@@ -12,7 +12,7 @@ class UserRegistrationForm(forms.ModelForm):
 class ProfileRegistrationForm(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = ('college','year','branch','mobile')
+        fields = ('college','year','branch','description','mobile','github_url','linkedin_url')
 
 class LoginForm(forms.Form):
     username = forms.CharField()

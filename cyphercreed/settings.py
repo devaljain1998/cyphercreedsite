@@ -33,12 +33,14 @@ ALLOWED_HOSTS = ['127.0.0.1', '.herokuapp.com']
 
 INSTALLED_APPS = [
     'markdownify',
-    'crispy_forms',
     'taggit',
     'blog.apps.BlogConfig',
     'discussion.apps.DiscussionConfig',
     'misc.apps.MiscConfig',
     'userprofile.apps.UserprofileConfig',
+    'actions.apps.ActionsConfig',
+    'dal',
+    'dal_select2',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -46,6 +48,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.postgres',
+    'crispy_forms',
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'

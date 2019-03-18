@@ -9,7 +9,8 @@ urlpatterns = [
     path('question/<pk>/question_detail/edit',views.edit_question,name='edit_question'),
     path('question/<pk>/question_detail/delete',views.QuestionDelete.as_view(),name='delete_question'),
     path('question/<pk>/question_detail/answer',views.add_answer,name='add_answer'),
-    path('question/<pk>/question_detail/answer/edit',views.AnswerUpdate.as_view(),name='edit_answer'),
+    path('answer/edit/<ans_id>',views.edit_answer,name='edit_answer'),
+    #path('question/<pk>/question_detail/answer/edit',views.AnswerUpdate.as_view(),name='edit_answer'),
     path('answer/delete/<ans_id>',views.delete_answer,name='delete_answer'),
     #path('question/<pk>/question_detail/answer/delete',views.AnswerDelete.as_view(),name='delete_answer'),
 
@@ -19,7 +20,7 @@ urlpatterns = [
     path('downvote/<ans_id>/',views.downvote,name='answer_downvote'),
     path('accept_answer/<ans_id>/',views.accept_answer,name='accept_answer'),
     #path('question/<pk>/question_detail/answer/downvote/<ans_id>/success',views.downvote,name='answer_downvote'),
-    
+    path('tag_autocomplete/', views.TagAutocomplete.as_view(), name='tag_autocomplete'),
     #path('question/<pk>/question_detail/answer',views.answerCreate.as_view(),name='add_answer'),
     #path('question/add/',views.questionCreate.as_view(),name='add_question'),
 ]

@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% load markdownify %}
-{% block title %} Ask QUestion {% endblock %}
+{% block title %} Ask Question {% endblock %}
 
 {% block header %}    
     <h2 class="display-5" style="font-family: x-locale-heading-primary,zillaslab,Palatino,Palatino Linotype,x-locale-heading-secondary,serif;">
@@ -13,8 +13,9 @@
     <h4 class="alert alert-primary alert-warning" role="alert">Errors:<br> {{form.errors}}  <hr></h4>
     {% endif %}
     <form action='.' method="POST">
+        {% load crispy_forms_tags %}
         {% csrf_token %}
-        {{form.as_p}}
+        {{form|crispy}}
         <input type="submit">
     </form>
 {% endblock %}
